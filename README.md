@@ -9,3 +9,5 @@ criação de comandos.
 O RedTeam32 não coleta, armazena, compartilha ou transmite quaisquer dados pessoais do usuário.
 Todas as informações trafegadas pelo aplicativo permanecem exclusivamente no dispositivo, salvo aquilo
 que o próprio usuário decide enviar manualmente para o microcontrolador ou para a API Gemini.
+
+![Uploading Gemini_Generated_Image_ikcnmmikcnmmikcn.png…]()
