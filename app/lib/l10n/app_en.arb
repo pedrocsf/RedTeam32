@@ -1,0 +1,43 @@
+{
+  "@@locale": "en",
+  "appTitle": "CERISE",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "welcome": "Welcome",
+  "@welcome": {
+    "description": "Welcome message"
+  },
+  "connect": "Connect",
+  "@connect": {
+    "description": "Connect button text"
+  },
+  "disconnect": "Disconnect",
+  "@disconnect": {
+    "description": "Disconnect button text"
+  },
+  "connectionStatus": "Connection Status",
+  "@connectionStatus": {
+    "description": "Label for connection status"
+  },
+  "connected": "Connected",
+  "@connected": {
+    "description": "Status when connected"
+  },
+  "disconnected": "Disconnected",
+  "@disconnected": {
+    "description": "Status when disconnected"
+  },
+  "chat": "Chat",
+  "@chat": {
+    "description": "Chat screen title"
+  },
+  "typeMessage": "Type a message...",
+  "@typeMessage": {
+    "description": "Placeholder text for message input"
+  },
+  "send": "Send",
+  "@send": {
+    "description": "Send button text"
+  }
+}
