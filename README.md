@@ -14,24 +14,25 @@ que o próprio usuário decide enviar manualmente para o microcontrolador ou par
 
 - Arquitetura
 lib/
-├── l10n/          # Internacionalização (i18n)
-│   ├── app_en.arb      # Strings em Inglês
-│   └── app_pt.arb      # Strings em Português
+├── l10n/                          # Internacionalização (i18n)
+│   ├── app_en.arb                 # Strings em Inglês
+│   └── app_pt.arb                 # Strings em Português
 │
-├── screens/       # Telas principais (Páginas)
-│   ├── chat_screen.dart        # Interface do terminal serial
-│   └── connection_screen.dart  # Escaneamento e conexão USB
+├── screens/                       # Telas principais (Páginas)
+│   ├── chat_screen.dart           # Interface do terminal serial
+│   └── connection_screen.dart     # Escaneamento e conexão USB
 │
-├── services/      # Lógica de Negócios e APIs
-│   └── gemini_service.dart     # Integração com Google Gemini AI
+├── services/                      # Lógica de Negócios e Integrações
+│   └── gemini_service.dart        # Integração com Google Gemini AI
 │
-├── theme/         # Design System
-│   └── cybersecurity_theme.dart # Estilos, cores e temas (Dark/Neon)
+├── theme/                         # Design System
+│   └── cybersecurity_theme.dart   # Estilos, cores e temas (Dark/Neon)
 │
-├── widgets/       # Componentes Reutilizáveis
-│   ├── gemini_chat_window.dart # Janela flutuante do assistente IA
-│   └── welcome_overlay.dart    # Modal de informações/boas-vindas
+├── widgets/                       # Componentes Reutilizáveis
+│   ├── gemini_chat_window.dart    # Janela flutuante do assistente IA
+│   └── welcome_overlay.dart       # Modal de informações / boas-vindas
 │
-└── main.dart      # Ponto de entrada e configuração do App
+└── main.dart                      # Ponto de entrada e configuração do App
+
 
 Para debugar: flutter run -t app/lib/main.dart
