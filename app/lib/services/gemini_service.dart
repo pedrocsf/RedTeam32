@@ -1,5 +1,5 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
-
+import 'package:app/l10n/app_localizations.dart';
 class GeminiService {
   final GenerativeModel _model;
   late ChatSession _chat;
@@ -49,6 +49,7 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
   Future<String> processUserMessage(
     String userMessage,
     String deviceResponse,
+    AppLocalizations l10n,
   ) async {
     try {
       if (deviceResponse.isNotEmpty) {
@@ -71,14 +72,14 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
       // Limita o texto da resposta por caracteres como backup
       return _limitResponseLength(responseText, maxChars: 500);
     } on GenerativeAIException catch (e) {
-      return "Erro da API Gemini: ${e.message}";
+      return l10n.geminiApiError(e.message);
     } catch (e) {
       if (e.toString().contains('Failed host lookup')) {
-        return "Erro de conexão: Verifique sua conexão com a internet e tente novamente.";
+        return l10n.connectionErrorCheckInternet;
       } else if (e.toString().contains('API key')) {
-        return "Erro: Chave da API do Gemini inválida ou expirada.";
+        return l10n.geminiApiKeyInvalid;
       } else {
-        return "Erro inesperado: ${e.toString()}";
+        return l10n.unexpectedError(e.toString());
       }
     }
   }
@@ -142,6 +143,7 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
   // Método para obter resposta com limite específico
   Future<String> getShortResponse(
     String userMessage, {
+    required AppLocalizations l10n,
     int maxChars = 200,
   }) async {
     try {
@@ -151,7 +153,7 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
       final responseText = response.text ?? "Erro ao processar.";
       return _limitResponseLength(responseText, maxChars: maxChars);
     } catch (e) {
-      return "Erro: ${e.toString()}";
+      return l10n.unexpectedError(e.toString());
     }
   }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:app/l10n/app_localizations.dart';
 import 'package:usb_serial/transaction.dart';
 import 'package:usb_serial/usb_serial.dart';
 import '../services/gemini_service.dart';
@@ -85,7 +86,9 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           if (mounted) {
             _messages.add(
               ChatMessage(
-                message: "ERRO DE CONEXÃO: $error",
+                message: AppLocalizations.of(
+                  context,
+                )!.connectionError(error.toString()),
                 isFromUser: false,
               ),
             );
@@ -122,7 +125,10 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       Future.delayed(const Duration(seconds: 1), () {
         setState(() {
           _messages.add(
-            ChatMessage(message: "Resposta mock do ESP32.", isFromUser: false),
+            ChatMessage(
+              message: AppLocalizations.of(context)!.mockResponse,
+              isFromUser: false,
+            ),
           );
           _scrollToBottom();
         });
@@ -137,7 +143,10 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       setState(() {
         _isConnected = false;
         _messages.add(
-          ChatMessage(message: "FALHA AO ENVIAR: $e", isFromUser: false),
+          ChatMessage(
+            message: AppLocalizations.of(context)!.sendFailure(e.toString()),
+            isFromUser: false,
+          ),
         );
       });
       _scrollToBottom();
@@ -333,8 +342,8 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                       Expanded(
                         child: TextField(
                           controller: _messageController,
-                          decoration: const InputDecoration(
-                            hintText: 'Digite um comando...',
+                          decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)!.typeCommand,
                           ),
                           onSubmitted: (_) => _sendMessage(),
                         ),
@@ -357,8 +366,8 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
             bottom: 120,
             child: Tooltip(
               message: widget.geminiService == null
-                  ? 'Assistente IA desativado (sem chave de API)'
-                  : 'Abrir assistente IA',
+                  ? AppLocalizations.of(context)!.aiDisabled
+                  : AppLocalizations.of(context)!.openAiAssistant,
               child: FloatingActionButton(
                 onPressed: widget.geminiService != null
                     ? _toggleGeminiChat

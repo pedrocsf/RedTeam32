@@ -14,23 +14,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CERISE',
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       theme: CybersecurityTheme.darkTheme,
       darkTheme: CybersecurityTheme.darkTheme,
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
-
-      // Localizations
+      //pra força o idioma
+      //locale: const Locale('en'),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('pt'),
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
 
       home: DEBUG_FORCE_CHAT_SCREEN ? ChatScreen() : const ConnectionScreen(),
     );

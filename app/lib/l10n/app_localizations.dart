@@ -157,6 +157,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send'**
   String get send;
+
+  /// No description provided for @statusDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'DISCONNECTED'**
+  String get statusDisconnected;
+
+  /// No description provided for @geminiApiKeyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gemini API Key'**
+  String get geminiApiKeyTitle;
+
+  /// No description provided for @enterKeyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your key here'**
+  String get enterKeyHint;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @apiKeyNeededStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'API KEY NEEDED'**
+  String get apiKeyNeededStatus;
+
+  /// No description provided for @scanning.
+  ///
+  /// In en, this message translates to:
+  /// **'SCANNING...'**
+  String get scanning;
+
+  /// No description provided for @noDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'NO DEVICES'**
+  String get noDevices;
+
+  /// No description provided for @devicesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'DEVICES FOUND'**
+  String get devicesFound;
+
+  /// No description provided for @connecting.
+  ///
+  /// In en, this message translates to:
+  /// **'CONNECTING...'**
+  String get connecting;
+
+  /// No description provided for @connectionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'CONNECTION FAILED'**
+  String get connectionFailed;
+
+  /// No description provided for @connectionEstablished.
+  ///
+  /// In en, this message translates to:
+  /// **'CONNECTION ESTABLISHED'**
+  String get connectionEstablished;
+
+  /// No description provided for @systemStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'SYSTEM STATUS'**
+  String get systemStatus;
+
+  /// No description provided for @unknownDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'UNKNOWN DEVICE'**
+  String get unknownDevice;
+
+  /// No description provided for @unknownManufacturer.
+  ///
+  /// In en, this message translates to:
+  /// **'UNKNOWN MANUFACTURER'**
+  String get unknownManufacturer;
+
+  /// No description provided for @configureApiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure API Key'**
+  String get configureApiKey;
+
+  /// No description provided for @aiAssistant.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Assistant'**
+  String get aiAssistant;
+
+  /// No description provided for @availableDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'AVAILABLE DEVICES'**
+  String get availableDevices;
+
+  /// No description provided for @apiKeyNeededMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Gemini API key is required.\nRestart the app to enter it.'**
+  String get apiKeyNeededMessage;
+
+  /// No description provided for @noDevicesFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NO DEVICES FOUND'**
+  String get noDevicesFoundTitle;
+
+  /// No description provided for @connectDevicePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a USB device and tap the scan button'**
+  String get connectDevicePrompt;
+
+  /// No description provided for @processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing...'**
+  String get processing;
+
+  /// No description provided for @noEspContext.
+  ///
+  /// In en, this message translates to:
+  /// **'No ESP32 context available'**
+  String get noEspContext;
+
+  /// No description provided for @recentContext.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent ESP32 chat context:\n{context}\n\nUser question: {question}'**
+  String recentContext(Object context, Object question);
+
+  /// No description provided for @userQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'User question: {question}'**
+  String userQuestion(Object question);
+
+  /// No description provided for @normalResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal Response'**
+  String get normalResponse;
+
+  /// No description provided for @shortResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Response'**
+  String get shortResponse;
+
+  /// No description provided for @commandOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Command Only'**
+  String get commandOnly;
+
+  /// No description provided for @connectionError.
+  ///
+  /// In en, this message translates to:
+  /// **'CONNECTION ERROR: {error}'**
+  String connectionError(Object error);
+
+  /// No description provided for @mockResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'ESP32 mock response.'**
+  String get mockResponse;
+
+  /// No description provided for @sendFailure.
+  ///
+  /// In en, this message translates to:
+  /// **'SEND FAILURE: {error}'**
+  String sendFailure(Object error);
+
+  /// No description provided for @typeCommand.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a command...'**
+  String get typeCommand;
+
+  /// No description provided for @aiDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Assistant disabled (no API key)'**
+  String get aiDisabled;
+
+  /// No description provided for @openAiAssistant.
+  ///
+  /// In en, this message translates to:
+  /// **'Open AI Assistant'**
+  String get openAiAssistant;
+
+  /// No description provided for @aboutApp.
+  ///
+  /// In en, this message translates to:
+  /// **'About App'**
+  String get aboutApp;
+
+  /// No description provided for @errorPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'ERROR: {error}'**
+  String errorPrefix(Object error);
+
+  /// No description provided for @aiSystemPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'You are an intelligent assistant specialized in pentesting using the ESP32 Marauder firmware. Your goal is to assist the user in operating the Marauder by suggesting appropriate commands and explaining their functions, always considering the context of the pentest being performed at the moment.\n\nIMPORTANT: Keep your answers CONCISE and DIRECT. Maximum of 3-4 sentences per answer, focusing on the essentials.'**
+  String get aiSystemPrompt;
+
+  /// No description provided for @geminiApiError.
+  ///
+  /// In en, this message translates to:
+  /// **'Gemini API Error: {message}'**
+  String geminiApiError(Object message);
+
+  /// No description provided for @connectionErrorCheckInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection error: Check your internet connection and try again.'**
+  String get connectionErrorCheckInternet;
+
+  /// No description provided for @geminiApiKeyInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: Gemini API key invalid or expired.'**
+  String get geminiApiKeyInvalid;
+
+  /// No description provided for @unexpectedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unexpected error: {message}'**
+  String unexpectedError(Object message);
 }
 
 class _AppLocalizationsDelegate

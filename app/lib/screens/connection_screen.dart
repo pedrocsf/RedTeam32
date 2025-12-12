@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/l10n/app_localizations.dart';
 import 'package:usb_serial/usb_serial.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'chat_screen.dart';
@@ -6,7 +7,7 @@ import '../services/gemini_service.dart';
 import '../widgets/gemini_chat_window.dart';
 import '../widgets/welcome_overlay.dart';
 import '../theme/cybersecurity_theme.dart';
-
+import 'package:app/l10n/app_localizations.dart';
 class ConnectionScreen extends StatefulWidget {
   const ConnectionScreen({super.key});
 
@@ -16,7 +17,7 @@ class ConnectionScreen extends StatefulWidget {
 
 class _ConnectionScreenState extends State<ConnectionScreen>
     with TickerProviderStateMixin {
-  String _status = "DESCONECTADO";
+  String _status = "";
   List<UsbDevice> _devices = [];
   bool _showWelcomeOverlay = false;
   bool _showGeminiChat = false;
@@ -32,7 +33,10 @@ class _ConnectionScreenState extends State<ConnectionScreen>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => _promptApiKey(context));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _promptApiKey(context);
+      _getPorts(); // Movido para cá para ter acesso ao contexto seguro
+    });
     // Animações
     _pulseController = AnimationController(
       duration: const Duration(seconds: 2),
@@ -51,8 +55,14 @@ class _ConnectionScreenState extends State<ConnectionScreen>
     _scanAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(parent: _scanController, curve: Curves.easeInOut),
     );
+  }
 
-    _getPorts();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_status.isEmpty) {
+      _status = AppLocalizations.of(context)!.statusDisconnected;
+    }
   }
 
   Future<void> _promptApiKey(BuildContext context) async {
@@ -67,12 +77,14 @@ class _ConnectionScreenState extends State<ConnectionScreen>
       builder: (context) => AlertDialog(
         backgroundColor: CybersecurityTheme.surfaceDark,
         title: Text(
-          'Chave da API do Gemini',
+          AppLocalizations.of(context)!.geminiApiKeyTitle,
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         content: TextField(
           controller: apiKeyController,
-          decoration: const InputDecoration(hintText: "Insira sua chave aqui"),
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.enterKeyHint,
+          ),
         ),
         actions: [
           TextButton(
@@ -81,7 +93,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
                 Navigator.of(context).pop(apiKeyController.text);
               }
             },
-            child: const Text('Confirmar'),
+            child: Text(AppLocalizations.of(context)!.confirm),
           ),
         ],
       ),
@@ -97,7 +109,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
       // Se o usuário fechar ou não inserir, podemos fechar o app ou desabilitar a IA.
       // Por enquanto, vamos manter o estado sem a chave.
       setState(() {
-        _status = "CHAVE API NECESSÁRIA";
+        _status = AppLocalizations.of(context)!.apiKeyNeededStatus;
       });
     }
   }
@@ -117,7 +129,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
   void _getPorts() async {
     setState(() {
       _isScanning = true;
-      _status = "ESCANEANDO...";
+      _status = AppLocalizations.of(context)!.scanning;
     });
 
     _scanController.forward().then((_) {
@@ -130,21 +142,21 @@ class _ConnectionScreenState extends State<ConnectionScreen>
       _devices = devices;
       _isScanning = false;
       _status = devices.isEmpty
-          ? "NENHUM DISPOSITIVO"
-          : "DISPOSITIVOS ENCONTRADOS";
+          ? AppLocalizations.of(context)!.noDevices
+          : AppLocalizations.of(context)!.devicesFound;
     });
   }
 
   Future<void> _connectTo(UsbDevice device) async {
     try {
       setState(() {
-        _status = "CONECTANDO...";
+        _status = AppLocalizations.of(context)!.connecting;
       });
 
       final port = await device.create();
       if (port == null || !await port.open()) {
         setState(() {
-          _status = "FALHA NA CONEXÃO";
+          _status = AppLocalizations.of(context)!.connectionFailed;
         });
         return;
       }
@@ -159,7 +171,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
       );
 
       setState(() {
-        _status = "CONEXÃO ESTABELECIDA";
+        _status = AppLocalizations.of(context)!.connectionEstablished;
       });
 
       Navigator.pushReplacement(
@@ -171,7 +183,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
       );
     } catch (e) {
       setState(() {
-        _status = "ERRO: ${e.toString()}";
+        _status = AppLocalizations.of(context)!.errorPrefix(e.toString());
       });
     }
   }
@@ -186,31 +198,25 @@ class _ConnectionScreenState extends State<ConnectionScreen>
     Color statusColor;
     IconData statusIcon;
 
-    switch (_status) {
-      case "CONECTANDO...":
-      case "ESCANEANDO...":
-        statusColor = CybersecurityTheme.accentRed;
-        statusIcon = Icons.sync;
-        break;
-      case "CONEXÃO ESTABELECIDA":
-        statusColor = CybersecurityTheme.successGreen;
-        statusIcon = Icons.check_circle;
-        break;
-      case "FALHA NA CONEXÃO":
-        statusColor = CybersecurityTheme.warningRed;
-        statusIcon = Icons.error;
-        break;
-      case "NENHUM DISPOSITIVO":
-        statusColor = CybersecurityTheme.textSecondary;
-        statusIcon = Icons.search_off;
-        break;
-      case "CHAVE API NECESSÁRIA":
-        statusColor = CybersecurityTheme.warningRed;
-        statusIcon = Icons.vpn_key_off;
-        break;
-      default:
-        statusColor = CybersecurityTheme.primaryRed;
-        statusIcon = Icons.devices;
+    if (_status == AppLocalizations.of(context)!.connecting ||
+        _status == AppLocalizations.of(context)!.scanning) {
+      statusColor = CybersecurityTheme.accentRed;
+      statusIcon = Icons.sync;
+    } else if (_status == AppLocalizations.of(context)!.connectionEstablished) {
+      statusColor = CybersecurityTheme.successGreen;
+      statusIcon = Icons.check_circle;
+    } else if (_status == AppLocalizations.of(context)!.connectionFailed) {
+      statusColor = CybersecurityTheme.warningRed;
+      statusIcon = Icons.error;
+    } else if (_status == AppLocalizations.of(context)!.noDevices) {
+      statusColor = CybersecurityTheme.textSecondary;
+      statusIcon = Icons.search_off;
+    } else if (_status == AppLocalizations.of(context)!.apiKeyNeededStatus) {
+      statusColor = CybersecurityTheme.warningRed;
+      statusIcon = Icons.vpn_key_off;
+    } else {
+      statusColor = CybersecurityTheme.primaryRed;
+      statusIcon = Icons.devices;
     }
 
     return AnimatedBuilder(
@@ -240,7 +246,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'STATUS DO SISTEMA',
+                      AppLocalizations.of(context)!.systemStatus,
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
                     const SizedBox(height: 4),
@@ -285,14 +291,15 @@ class _ConnectionScreenState extends State<ConnectionScreen>
           child: const Icon(Icons.memory, color: Colors.black, size: 24),
         ),
         title: Text(
-          device.productName ?? "DISPOSITIVO DESCONHECIDO",
+          device.productName ?? AppLocalizations.of(context)!.unknownDevice,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color: CybersecurityTheme.textPrimary,
             fontWeight: FontWeight.w600,
           ),
         ),
         subtitle: Text(
-          device.manufacturerName ?? "FABRICANTE DESCONHECIDO",
+          device.manufacturerName ??
+              AppLocalizations.of(context)!.unknownManufacturer,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: CybersecurityTheme.textSecondary,
           ),
@@ -319,8 +326,8 @@ class _ConnectionScreenState extends State<ConnectionScreen>
               ),
             ),
             onPressed: () => _connectTo(device),
-            child: const Text(
-              'CONECTAR',
+            child: Text(
+              AppLocalizations.of(context)!.connect.toUpperCase(),
               style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 1.0),
             ),
           ),
@@ -342,8 +349,8 @@ class _ConnectionScreenState extends State<ConnectionScreen>
             ),
             onPressed: _toggleGeminiChat,
             tooltip: _geminiService == null
-                ? 'Configure a API Key'
-                : 'Assistente IA',
+                ? AppLocalizations.of(context)!.configureApiKey
+                : AppLocalizations.of(context)!.aiAssistant,
           ),
         ],
       ),
@@ -373,7 +380,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'DISPOSITIVOS DISPONÍVEIS',
+                        AppLocalizations.of(context)!.availableDevices,
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                     ],
@@ -416,7 +423,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
               child: IconButton(
                 icon: const Icon(Icons.info_outline),
                 color: CybersecurityTheme.textSecondary,
-                tooltip: 'Sobre o App',
+                tooltip: AppLocalizations.of(context)!.aboutApp,
                 onPressed: _openWelcomeOverlay,
               ),
             ),
@@ -461,7 +468,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
               border: Border.all(color: CybersecurityTheme.warningRed),
             ),
             child: Text(
-              'A chave da API do Gemini é necessária.\nReinicie o aplicativo para inseri-la.',
+              AppLocalizations.of(context)!.apiKeyNeededMessage,
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
@@ -483,14 +490,14 @@ class _ConnectionScreenState extends State<ConnectionScreen>
           ),
           const SizedBox(height: 16),
           Text(
-            'NENHUM DISPOSITIVO ENCONTRADO',
+            AppLocalizations.of(context)!.noDevicesFoundTitle,
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
               color: CybersecurityTheme.textSecondary,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Conecte um dispositivo USB e toque no botão de escaneamento',
+            AppLocalizations.of(context)!.connectDevicePrompt,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),

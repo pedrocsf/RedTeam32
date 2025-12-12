@@ -1,3 +1,4 @@
+import 'package:app/l10n/app_localizations.dart';
 import 'package:app/theme/cybersecurity_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -60,7 +61,10 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
 
     // Mostrar indicador de carregamento
     setState(() {
-      _messages.add({'text': 'Processando...', 'isUser': 'false'});
+      _messages.add({
+        'text': AppLocalizations.of(context)!.processing,
+        'isUser': 'false',
+      });
     });
 
     // Pegar as últimas 5 mensagens do chat ESP32 para contexto
@@ -69,11 +73,13 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
               .take(5)
               .map((m) => "${m.isFromUser ? 'Usuário' : 'ESP32'}: ${m.message}")
               .join("\n")
-        : "Nenhum contexto do ESP32 disponível";
+        : AppLocalizations.of(context)!.noEspContext;
 
     final contextMessage = widget.espMessages.isNotEmpty
-        ? "Contexto recente do chat com ESP32:\n$recentESPContext\n\nPergunta do usuário: $userMessage"
-        : "Pergunta do usuário: $userMessage";
+        ? AppLocalizations.of(
+            context,
+          )!.recentContext(recentESPContext, userMessage)
+        : AppLocalizations.of(context)!.userQuestion(userMessage);
 
     // Escolher método baseado no modo de resposta
     String response;
@@ -81,6 +87,7 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
       case 'short':
         response = await widget.geminiService.getShortResponse(
           contextMessage,
+          l10n: AppLocalizations.of(context)!,
           maxChars: 300,
         );
         break;
@@ -91,6 +98,7 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
         response = await widget.geminiService.processUserMessage(
           contextMessage,
           "",
+          AppLocalizations.of(context)!,
         );
     }
 
@@ -184,7 +192,7 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
                               ),
                               SizedBox(width: 8),
                               Text(
-                                'Chat',
+                                AppLocalizations.of(context)!.chat,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -214,7 +222,11 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
                                       children: [
                                         Icon(Icons.chat_bubble_outline),
                                         SizedBox(width: 8),
-                                        Text('Resposta Normal'),
+                                        Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.normalResponse,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -224,7 +236,11 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
                                       children: [
                                         Icon(Icons.short_text),
                                         SizedBox(width: 8),
-                                        Text('Resposta Curta'),
+                                        Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.shortResponse,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -234,7 +250,11 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
                                       children: [
                                         Icon(Icons.code),
                                         SizedBox(width: 8),
-                                        Text('Apenas Comando'),
+                                        Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.commandOnly,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -298,7 +318,9 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
                           child: TextField(
                             controller: _messageController,
                             decoration: InputDecoration(
-                              hintText: 'Digite sua mensagem...',
+                              hintText: AppLocalizations.of(
+                                context,
+                              )!.typeMessage,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25),
                               ),
