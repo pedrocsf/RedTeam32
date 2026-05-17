@@ -55,9 +55,8 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     )..repeat(reverse: true);
 
     _connectionAnimation = ColorTween(
-      begin: CybersecurityTheme
-          .successGreen, // Mantido, pois o nome da cor é o mesmo
-      end: CybersecurityTheme.successGreen.withOpacity(0.5), // Mantido
+      begin: CybersecurityTheme.successGreen,
+      end: CybersecurityTheme.successGreen.withOpacity(0.5),
     ).animate(_connectionController);
   }
 
@@ -136,7 +135,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       return;
     }
 
-    // Fluxo normal: envia a mensagem pela porta USB.
     try {
       await widget.port!.write(Uint8List.fromList('$message\r\n'.codeUnits));
     } catch (e) {
@@ -194,7 +192,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 decoration: BoxDecoration(
                   color: _isConnected
                       ? _connectionAnimation.value
-                      : CybersecurityTheme.warningRed, // Mantido
+                      : CybersecurityTheme.warningRed,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -221,7 +219,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    // Mantido, pois warningRed é uma cor apropriada
                     CybersecurityTheme.warningRed,
                     CybersecurityTheme.warningRed.withOpacity(0.7),
                   ],
@@ -237,14 +234,11 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 gradient: isUser
-                    ? CybersecurityTheme
-                          .neonGradient // Alterado para o novo gradiente vermelho
+                    ? CybersecurityTheme.neonGradient
                     : LinearGradient(
                         colors: [
-                          CybersecurityTheme
-                              .surfaceDark, // Alterado para a nova cor de superfície
-                          CybersecurityTheme
-                              .lightGray, // Alterado para o novo cinza claro
+                          CybersecurityTheme.surfaceDark,
+                          CybersecurityTheme.lightGray,
                         ],
                       ),
                 borderRadius: BorderRadius.only(
@@ -257,9 +251,8 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                   BoxShadow(
                     color:
                         (isUser
-                                ? CybersecurityTheme
-                                      .primaryRed // Alterado para a sombra vermelha
-                                : CybersecurityTheme.surfaceDark) // Mantido
+                                ? CybersecurityTheme.primaryRed
+                                : CybersecurityTheme.surfaceDark)
                             .withOpacity(0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
@@ -273,10 +266,8 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     message.message,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: isUser
-                          ? Colors
-                                .black // Cor para mensagem do usuário mantida
-                          : CybersecurityTheme
-                                .textPrimary, // Alterado para a nova cor de texto primário
+                          ? Colors.black
+                          : CybersecurityTheme.textPrimary,
                       fontFamily: 'monospace',
                     ),
                   ),
@@ -285,10 +276,8 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     '${message.timestamp.hour.toString().padLeft(2, '0')}:${message.timestamp.minute.toString().padLeft(2, '0')}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: isUser
-                          ? Colors
-                                .black54 // Cor para timestamp do usuário mantida
-                          : CybersecurityTheme
-                                .textSecondary, // Alterado para a nova cor de texto secundário
+                          ? Colors.black54
+                          : CybersecurityTheme.textSecondary,
                       fontSize: 10,
                     ),
                   ),
@@ -302,8 +291,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                gradient: CybersecurityTheme
-                    .neonGradient, // Alterado para o novo gradiente vermelho
+                gradient: CybersecurityTheme.neonGradient,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: const Icon(Icons.person, color: Colors.black, size: 16),
@@ -360,7 +348,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               ),
             ],
           ),
-          // Botão flutuante para abrir o chat do Gemini
           Positioned(
             right: 10,
             bottom: 120,
@@ -383,8 +370,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           ),
           if (_showGeminiChat && widget.geminiService != null)
             GeminiChatWindow(
-              geminiService: widget
-                  .geminiService!, // This was already correct, but I'm confirming it.
+              geminiService: widget.geminiService!,
               espMessages: _messages,
               onClose: _toggleGeminiChat,
             ),

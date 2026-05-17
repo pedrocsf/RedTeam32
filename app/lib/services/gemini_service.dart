@@ -1,5 +1,6 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:app/l10n/app_localizations.dart';
+
 class GeminiService {
   final GenerativeModel _model;
   late ChatSession _chat;
@@ -14,11 +15,9 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
         model: 'gemini-2.5-flash',
         apiKey: apiKey,
         generationConfig: GenerationConfig(
-          //maxOutputTokens:70,
-          temperature: 0.7, // Controla criatividade
-          topK: 40, // Considera apenas os 40 tokens mais prováveis
-          topP:
-              0.95, // Amostragem nucleus - considera tokens que somam 95% da probabilidade
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
         ),
       ) {
     _initializeChat();
@@ -58,7 +57,6 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
         );
       }
 
-      // Adiciona instruções de brevidade ao prompt do usuário
       final enhancedUserMessage =
           "$userMessage\n\n[Responda de forma CONCISA em no máximo 3 frases]";
 
@@ -69,7 +67,6 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
       final responseText =
           response.text ?? "Desculpe, não consegui processar sua solicitação.";
 
-      // Limita o texto da resposta por caracteres como backup
       return _limitResponseLength(responseText, maxChars: 500);
     } on GenerativeAIException catch (e) {
       return l10n.geminiApiError(e.message);
@@ -84,11 +81,9 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
     }
   }
 
-  // Método auxiliar para limitar o tamanho da resposta
   String _limitResponseLength(String text, {int maxChars = 500}) {
     if (text.length <= maxChars) return text;
 
-    // Tenta cortar na última frase completa antes do limite
     String truncated = text.substring(0, maxChars);
     int lastPeriod = truncated.lastIndexOf('.');
     int lastExclamation = truncated.lastIndexOf('!');
@@ -101,11 +96,9 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
     ].reduce((a, b) => a > b ? a : b);
 
     if (lastSentenceEnd > maxChars * 0.7) {
-      // Se encontrou uma frase a pelo menos 70% do limite
       return truncated.substring(0, lastSentenceEnd + 1);
     }
 
-    // Caso contrário, corta e adiciona reticências
     return truncated.trim() + "...";
   }
 
@@ -133,14 +126,10 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
     _initializeChat();
   }
 
-  // Métodos para configurar limites dinamicamente
   void updateMaxTokens(int maxTokens) {
-    // Nota: Para alterar maxTokens, seria necessário recriar o modelo
-    // Este método serve como placeholder para futuras implementações
     print("Configurando limite máximo de tokens para: $maxTokens");
   }
 
-  // Método para obter resposta com limite específico
   Future<String> getShortResponse(
     String userMessage, {
     required AppLocalizations l10n,
@@ -157,7 +146,6 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
     }
   }
 
-  // Método para obter apenas comandos (muito curto)
   Future<String> getCommandOnly(String userMessage) async {
     try {
       final commandPrompt =
@@ -165,7 +153,6 @@ IMPORTANTE: Mantenha suas respostas CONCISAS e DIRETAS. Máximo de 3-4 frases po
       final response = await _chat.sendMessage(Content.text(commandPrompt));
       final responseText = response.text?.trim() ?? "";
 
-      // Para comandos, limite muito restritivo
       return _limitResponseLength(responseText, maxChars: 100);
     } catch (e) {
       return "";

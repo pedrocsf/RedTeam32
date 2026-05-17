@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CybersecurityTheme {
-  // Cores principais do tema "Red Team"
   static const Color primaryRed = Color(0xFFE02424);
   static const Color accentRed = Color(0xFFFF5C5C);
   static const Color darkGray = Color(0xFF121212);
@@ -20,7 +19,6 @@ class CybersecurityTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
 
-      // Esquema de cores
       colorScheme: const ColorScheme.dark(
         primary: primaryRed,
         secondary: accentRed,
@@ -34,7 +32,6 @@ class CybersecurityTheme {
         onError: Colors.white,
       ),
 
-      // Tipografia futurista
       textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontSize: 32,
@@ -87,7 +84,6 @@ class CybersecurityTheme {
         ),
       ),
 
-      // AppBar Theme
       appBarTheme: const AppBarTheme(
         backgroundColor: mediumGray,
         foregroundColor: textPrimary,
@@ -105,7 +101,6 @@ class CybersecurityTheme {
         systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
 
-      // Card Theme
       cardTheme: CardThemeData(
         color: surfaceDark,
         elevation: 4,
@@ -116,7 +111,6 @@ class CybersecurityTheme {
         ),
       ),
 
-      // Elevated Button Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryRed,
@@ -133,7 +127,6 @@ class CybersecurityTheme {
         ),
       ),
 
-      // Outlined Button Theme
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: primaryRed,
@@ -148,7 +141,6 @@ class CybersecurityTheme {
         ),
       ),
 
-      // Text Button Theme
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: accentRed,
@@ -161,7 +153,6 @@ class CybersecurityTheme {
         ),
       ),
 
-      // FloatingActionButton Theme
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: primaryRed,
         foregroundColor: Colors.black,
@@ -172,7 +163,6 @@ class CybersecurityTheme {
         ),
       ),
 
-      // Input Decoration Theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: lightGray,
@@ -206,10 +196,8 @@ class CybersecurityTheme {
         ),
       ),
 
-      // Icon Theme
       iconTheme: const IconThemeData(color: primaryRed, size: 24),
 
-      // List Tile Theme
       listTileTheme: const ListTileThemeData(
         iconColor: primaryRed,
         textColor: textPrimary,
@@ -229,16 +217,13 @@ class CybersecurityTheme {
         ),
       ),
 
-      // Scaffold Background
       scaffoldBackgroundColor: backgroundDark,
 
-      // Divider Theme
       dividerTheme: DividerThemeData(
         color: primaryRed.withOpacity(0.3),
         thickness: 1,
       ),
 
-      // Chip Theme
       chipTheme: const ChipThemeData(
         backgroundColor: lightGray,
         labelStyle: TextStyle(
@@ -254,14 +239,12 @@ class CybersecurityTheme {
         ),
       ),
 
-      // Progress Indicator Theme
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: primaryRed,
         circularTrackColor: lightGray,
         linearTrackColor: lightGray,
       ),
 
-      // Switch Theme
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
@@ -279,7 +262,6 @@ class CybersecurityTheme {
     );
   }
 
-  // Gradientes personalizados
   static const LinearGradient neonGradient = LinearGradient(
     colors: [primaryRed, accentRed],
     begin: Alignment.topLeft,
@@ -292,7 +274,6 @@ class CybersecurityTheme {
     end: Alignment.bottomCenter,
   );
 
-  // Sombras personalizadas
   static List<BoxShadow> get neonShadow => [
     BoxShadow(
       color: primaryRed.withOpacity(0.3),

@@ -8,6 +8,7 @@ import '../widgets/gemini_chat_window.dart';
 import '../widgets/welcome_overlay.dart';
 import '../theme/cybersecurity_theme.dart';
 import 'package:app/l10n/app_localizations.dart';
+
 class ConnectionScreen extends StatefulWidget {
   const ConnectionScreen({super.key});
 
@@ -35,9 +36,8 @@ class _ConnectionScreenState extends State<ConnectionScreen>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _promptApiKey(context);
-      _getPorts(); // Movido para cá para ter acesso ao contexto seguro
+      _getPorts();
     });
-    // Animações
     _pulseController = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -73,7 +73,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
 
     final newApiKey = await showDialog<String>(
       context: context,
-      barrierDismissible: false, // O usuário deve fornecer uma chave
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
         backgroundColor: CybersecurityTheme.surfaceDark,
         title: Text(
@@ -106,8 +106,6 @@ class _ConnectionScreenState extends State<ConnectionScreen>
         _geminiService = GeminiService(apiKey: _apiKey!);
       });
     } else {
-      // Se o usuário fechar ou não inserir, podemos fechar o app ou desabilitar a IA.
-      // Por enquanto, vamos manter o estado sem a chave.
       setState(() {
         _status = AppLocalizations.of(context)!.apiKeyNeededStatus;
       });
@@ -362,10 +360,8 @@ class _ConnectionScreenState extends State<ConnectionScreen>
           children: [
             Column(
               children: [
-                // Indicador de status
                 _buildStatusIndicator(),
 
-                // Título da seção de dispositivos
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -387,7 +383,6 @@ class _ConnectionScreenState extends State<ConnectionScreen>
                   ),
                 ),
 
-                // Lista de dispositivos
                 Expanded(
                   child: _devices.isEmpty
                       ? _buildEmptyState()
@@ -402,7 +397,6 @@ class _ConnectionScreenState extends State<ConnectionScreen>
               ],
             ),
 
-            // Chat Gemini sobreposto
             if (_showGeminiChat && _geminiService != null)
               GeminiChatWindow(
                 geminiService: _geminiService!,
@@ -412,11 +406,9 @@ class _ConnectionScreenState extends State<ConnectionScreen>
             else if (_showGeminiChat && _geminiService == null)
               _buildApiKeyNeededOverlay(),
 
-            // Overlay de boas-vindas
             if (_showWelcomeOverlay)
               WelcomeOverlay(onClose: _closeWelcomeOverlay),
 
-            // Botão de Informações
             Positioned(
               left: 16,
               bottom: 60,
@@ -456,7 +448,7 @@ class _ConnectionScreenState extends State<ConnectionScreen>
 
   Widget _buildApiKeyNeededOverlay() {
     return GestureDetector(
-      onTap: _toggleGeminiChat, // Fecha ao tocar fora
+      onTap: _toggleGeminiChat,
       child: Container(
         color: Colors.black.withOpacity(0.7),
         child: Center(

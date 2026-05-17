@@ -33,9 +33,8 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
   bool _isDragging = false;
   bool _isResizing = false;
 
-  // Opções de resposta
-  bool _shortResponseMode = true; // Modo resposta curta ativado por padrão
-  String _responseMode = 'normal'; // 'normal', 'short', 'command'
+  bool _shortResponseMode = true;
+  String _responseMode = 'normal';
 
   @override
   void initState() {
@@ -59,7 +58,6 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
       _messages.add({'text': userMessage, 'isUser': 'true'});
     });
 
-    // Mostrar indicador de carregamento
     setState(() {
       _messages.add({
         'text': AppLocalizations.of(context)!.processing,
@@ -67,7 +65,6 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
       });
     });
 
-    // Pegar as últimas 5 mensagens do chat ESP32 para contexto
     final recentESPContext = widget.espMessages.isNotEmpty
         ? widget.espMessages.reversed
               .take(5)
@@ -81,7 +78,6 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
           )!.recentContext(recentESPContext, userMessage)
         : AppLocalizations.of(context)!.userQuestion(userMessage);
 
-    // Escolher método baseado no modo de resposta
     String response;
     switch (_responseMode) {
       case 'short':
@@ -102,9 +98,8 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
         );
     }
 
-    // Remover o indicador de carregamento e adicionar a resposta
     setState(() {
-      _messages.removeLast(); // Remove "Processando..."
+      _messages.removeLast();
       _messages.add({'text': response, 'isUser': 'false'});
     });
 
@@ -125,7 +120,7 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
   @override
   Widget build(BuildContext context) {
     if (_windowWidth == 0 || _windowHeight == 0) {
-      return Container(); // Aguarda inicialização
+      return Container();
     }
 
     return Positioned(
@@ -136,13 +131,11 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
         height: _windowHeight,
         child: Stack(
           children: [
-            // Janela principal
             Card(
               clipBehavior: Clip.antiAlias,
               margin: EdgeInsets.zero,
               child: Column(
                 children: [
-                  // Barra de título (área arrastável)
                   GestureDetector(
                     onPanStart: (details) {
                       setState(() {
@@ -155,7 +148,6 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
                           _windowX += details.delta.dx;
                           _windowY += details.delta.dy;
 
-                          // Limites da tela
                           final screenSize = MediaQuery.of(context).size;
                           _windowX = _windowX.clamp(
                             0.0,
@@ -270,7 +262,6 @@ class _GeminiChatWindowState extends State<GeminiChatWindow> {
                       ),
                     ),
                   ),
-                  // Conteúdo do chat
                   Expanded(
                     child: ListView.builder(
                       controller: _scrollController,
