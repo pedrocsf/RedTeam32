@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Privacidade – RedTeam32</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #0b0b0d;
+    --surface: #16161a;
+    --text: #e6e6e6;
+    --text-secondary: #a0a0a8;
+    --accent: #e02424;
+    --border: rgba(224, 36, 36, 0.3);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  header {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  h1 {
+    font-size: 1.8rem;
+    margin: 0 0 8px;
+    color: var(--accent);
+  }
+  .meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+    margin-top: 36px;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 10px;
+  }
+  p, li {
+    color: var(--text);
+    font-size: 0.98rem;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  a { color: var(--accent); }
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Política de Privacidade — RedTeam32</h1>
+    <div class="meta">Última atualização: 03 de julho de 2026</div>
+  </header>
+
+  <p>
+    O RedTeam32 ("aplicativo", "app") é uma ferramenta de apoio a testes de
+    penetração (pentest) autorizados, que se comunica via USB com um
+    microcontrolador ESP32 e oferece um assistente de inteligência
+    artificial opcional baseado na API do Google Gemini. Esta política
+    explica quais dados o aplicativo trata e como.
+  </p>
+
+  <h2>1. Quem é o responsável pelo tratamento de dados</h2>
+  <p>
+    Este é um aplicativo desenvolvido e mantido de forma independente.
+    Para dúvidas sobre esta política, entre em contato pelo e-mail
+    informado na seção "Contato" abaixo.
+  </p>
+
+  <h2>2. Dados que o aplicativo coleta e armazena</h2>
+  <div class="card">
+    <strong>Chave de API do Gemini</strong>
+    <p>
+      Ao usar o assistente de IA, você fornece sua própria chave de API do
+      Google Gemini. Essa chave é armazenada <strong>apenas localmente no
+      seu dispositivo</strong> (usando armazenamento local do sistema
+      operacional) e nunca é enviada para servidores próprios do
+      desenvolvedor. Ela é usada exclusivamente para autenticar suas
+      próprias requisições diretamente à API do Google.
+    </p>
+  </div>
+  <div class="card">
+    <strong>Mensagens do chat e comandos</strong>
+    <p>
+      As mensagens que você digita no assistente de IA, assim como as
+      respostas retornadas pelo dispositivo ESP32 conectado, podem ser
+      enviadas à API do Google Gemini para gerar respostas e sugestões de
+      comando. Essas mensagens não são armazenadas pelo desenvolvedor do
+      aplicativo nem enviadas a qualquer servidor próprio — o app não
+      possui backend.
+    </p>
+  </div>
+  <div class="card">
+    <strong>Comunicação USB/Serial</strong>
+    <p>
+      O aplicativo se conecta a dispositivos USB (ESP32) para enviar e
+      receber comandos seriais. Essa comunicação ocorre inteiramente entre
+      o seu dispositivo móvel e o hardware conectado, de forma local, sem
+      transmissão pela internet.
+    </p>
+  </div>
+
+  <h2>3. Dados que o aplicativo NÃO coleta</h2>
+  <ul>
+    <li>Não coletamos nome, e-mail, telefone ou outros dados de identificação pessoal.</li>
+    <li>Não coletamos localização geográfica.</li>
+    <li>Não utilizamos câmera, microfone ou contatos.</li>
+    <li>Não utilizamos cookies, rastreadores ou ferramentas de analytics/publicidade.</li>
+    <li>Não compartilhamos, vendemos ou alugamos dados a terceiros.</li>
+  </ul>
+
+  <h2>4. Serviços de terceiros</h2>
+  <p>
+    O assistente de IA utiliza a <strong>API do Google Gemini</strong>
+    (Google Generative AI). Ao usar esse recurso, as mensagens enviadas
+    estão sujeitas também à
+    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de Privacidade do Google</a>
+    e aos
+    <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener noreferrer">Termos de Serviço da API Gemini</a>.
+    O uso do assistente de IA é opcional e requer que o próprio usuário
+    forneça sua chave de API pessoal.
+  </p>
+
+  <h2>5. Permissões do dispositivo</h2>
+  <p>
+    O aplicativo solicita permissão de acesso a dispositivos USB
+    exclusivamente para estabelecer a comunicação serial com o
+    microcontrolador ESP32. Nenhuma outra permissão sensível é solicitada.
+  </p>
+
+  <h2>6. Armazenamento e segurança</h2>
+  <p>
+    Os únicos dados persistidos pelo aplicativo (a chave de API do Gemini)
+    ficam salvos localmente no armazenamento privado do próprio
+    dispositivo. Você pode remover esses dados a qualquer momento
+    desinstalando o aplicativo ou limpando seus dados nas configurações do
+    sistema operacional.
+  </p>
+
+  <h2>7. Uso responsável</h2>
+  <p>
+    Este aplicativo foi desenvolvido para fins educacionais e para uso em
+    testes de penetração autorizados. O usuário é o único responsável por
+    garantir que possui autorização legal para testar qualquer rede ou
+    sistema com o auxílio desta ferramenta.
+  </p>
+
+  <h2>8. Privacidade infantil</h2>
+  <p>
+    Este aplicativo não é direcionado a crianças e não coleta
+    intencionalmente dados de menores de 13 anos.
+  </p>
+
+  <h2>9. Alterações nesta política</h2>
+  <p>
+    Esta política pode ser atualizada periodicamente. A data da última
+    atualização está indicada no topo desta página.
+  </p>
+
+  <h2>10. Contato</h2>
+  <p>
+    Em caso de dúvidas sobre esta Política de Privacidade, entre em
+    contato pelo e-mail:
+    <a href="mailto:pedroferreira.cybersec@gmail.com">pedroferreira.cybersec@gmail.com</a>.
+  </p>
+
+  <footer>
+    RedTeam32 — Política de Privacidade
+  </footer>
+</div>
+</body>
+</html>
